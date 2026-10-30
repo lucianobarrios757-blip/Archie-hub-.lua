@@ -1,0 +1,75 @@
+-- ARCHIE HUB 🦇
+-- Visual interface
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "ArchieHub"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 230, 0, 300)
+frame.Position = UDim2.new(0, 20, 0.3, 0)
+frame.BackgroundColor3 = Color3.fromRGB(35, 20, 45)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+frame.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = frame
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -60, 0, 45)
+title.BackgroundTransparency = 1
+title.Text = "🦇 ARCHIE HUB"
+title.TextColor3 = Color3.fromRGB(255, 130, 40)
+title.TextSize = 22
+title.Font = Enum.Font.GothamBold
+title.Parent = frame
+
+local close = Instance.new("TextButton")
+close.Size = UDim2.new(0, 35, 0, 35)
+close.Position = UDim2.new(1, -40, 0, 5)
+close.Text = "X"
+close.TextColor3 = Color3.new(1, 1, 1)
+close.BackgroundColor3 = Color3.fromRGB(170, 45, 65)
+close.Parent = frame
+
+local minimize = Instance.new("TextButton")
+minimize.Size = UDim2.new(0, 35, 0, 35)
+minimize.Position = UDim2.new(1, -80, 0, 5)
+minimize.Text = "V"
+minimize.TextColor3 = Color3.new(1, 1, 1)
+minimize.BackgroundColor3 = Color3.fromRGB(100, 55, 140)
+minimize.Parent = frame
+
+local minimized = false
+
+minimize.MouseButton1Click:Connect(function()
+    minimized = not minimized
+    frame.Size = minimized
+        and UDim2.new(0, 230, 0, 45)
+        or UDim2.new(0, 230, 0, 300)
+end)
+
+close.MouseButton1Click:Connect(function()
+    gui:Destroy()
+end)
+
+UserInputService.InputBegan:Connect(function(input, processed)
+    if processed then return end
+
+    if input.KeyCode == Enum.KeyCode.V then
+        minimized = not minimized
+        frame.Size = minimized
+            and UDim2.new(0, 230, 0, 45)
+            or UDim2.new(0, 230, 0, 300)
+    end
+end)
+
+print("ARCHIE HUB LOADED 🦇")
